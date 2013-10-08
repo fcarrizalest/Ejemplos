@@ -89,5 +89,23 @@ $reporte->ejecutar();
 
 
 
+// Idea de uso.
+
+
+if($_GET["tipo"] == "barra"){
+	$reporte->setEstrategia( new ReporteBarra($datos) );
+
+
+
+}else{
+	$reporte->setEstrategia( new ReporteExportacionExcel($datos) );
+
+}
+
+
+$reporte->ejecutar();
+
+
+
 
 

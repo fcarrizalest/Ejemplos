@@ -10,16 +10,11 @@ class ReporteBarra implements  Estrategia{
 	private $datos;
 
 	function __construct($datos) {
-
 		$this->datos = $datos;
-
 	}
 
 	function hacerReporte(){
-
-			echo "Magia negra de programacion para realizar una grafica de barra con los Datos<br>";
-
-
+		echo "Magia negra de programacion para realizar una grafica de barra con los Datos<br>";
 	}
 }
 
@@ -28,19 +23,12 @@ class ReporteExportacionExcel implements Estrategia{
 	private $datos;
 
 	function __construct($datos){
-
 		$this->datos = $datos;
-
-
 	}
 
 	public function hacerReporte(  ) {
-		// TODO: Auto-generated method stub
 		echo  "Magia negra de programacion para realizar una archivo de excel con los Datos<br>";
 	}
-
-
-
 
 }
 
@@ -62,22 +50,14 @@ class Reporte {
 	}
 
 	function ejecutar(){
-
-
 		$this->estrategia->hacerReporte();
-
-
 	}
-
-
 }
 
 
 $datos = array();
 
-
 $reporte = new Reporte( );
-
 
 $reporte->setEstrategia( new ReporteBarra($datos) );
 
@@ -91,21 +71,10 @@ $reporte->ejecutar();
 
 // Idea de uso.
 
-
 if($_GET["tipo"] == "barra"){
 	$reporte->setEstrategia( new ReporteBarra($datos) );
-
-
-
 }else{
 	$reporte->setEstrategia( new ReporteExportacionExcel($datos) );
-
 }
 
-
 $reporte->ejecutar();
-
-
-
-
-

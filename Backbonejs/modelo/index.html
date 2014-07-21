@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es_ES">
+
+<head>
+	<meta charset="utf-8">
+	<title> Hola BackBoneJs</title>
+	
+	<script type="text/javascript" src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="//underscorejs.org/underscore-min.js"></script>
+	<script type="text/javascript" src="//backbonejs.org/backbone-min.js"></script>
+
+	<script type="text/javascript">
+		// creamos nuestra Estructura de datos
+		var Usuario = Backbone.Model.extend({
+			defaults: {
+      				Nombre: null,
+      				ApellidoP: null,
+      				ApellidoM : null,
+  			},
+  			validate: function(attrs, options) {
+  				var mensaje = "";
+  				if( attrs.Nombre == null ||  attrs.Nombre == "" )
+  					mensaje  = " El nombre esta mal";
+
+  				if( attrs.ApellidoP == null ||  attrs.ApellidoP == "" )
+  					mensaje  = " El apellidoP esta mal";
+  				if( attrs.ApellidoM == null ||  attrs.ApellidoM == "" )
+  					mensaje  = " El apellidoM esta mal";
+  				
+  				if(mensaje != "")
+  					return mensaje;
+
+
+  			},
+  			urlRoot : '/users',
+
+		});
+
+
+
+
+		$( document ).ready(function() {
+				
+			// ahora utizamos nuestra nueva estructura
+			var $usuario = new Usuario( { Nombre: $("#nombre").val() ,  ApellidoP:$("#apellidoP").val() , ApellidoM: $("#apellidoM").val() });
+
+
+			// De esta forma tenemos control de cuando algo cambia...
+			// 
+			$usuario.on("change:Nombre", function(model, name) {
+  				alert("Cambio el Nombre: " + model.previous("Nombre") + " a " + name);
+			});
+
+			$usuario.on("change:AppellidoP", function(model, name) {
+  				alert("Cambio el appellidoP " + model.previous("ApellidoP") + " to " + name);
+			});
+
+									
+			$("#frm1").submit(function( event ) {
+				
+				$usuario.set("Nombre", $("#nombre").val());
+				$usuario.set("ApellidoP" , $("#apellidoP").val());
+				$usuario.set("ApellidoM" , $("#apellidoM").val() );
+
+				console.log($usuario);
+
+				if (!$usuario.isValid()) {
+ 	 				alert("Algo no esta bien!! " + " " + $usuario.validationError );
+ 	 				return false;
+				}
+						
+				$usuario.save();
+				
+				alert("Enviamos los datos al servidor")
+
+				event.preventDefault();	
+
+			});		
+
+		});
+
+
+	</script>
+</head>
+
+<body>
+
+	<form id="frm1">
+			<table>
+					<tr>
+							<td> Nombre: </td>
+							<td> <input type="text" name="nombre" id="nombre"> </td>
+
+					<tr>
+
+					<tr>  
+							<td> Apellido Paterno: </td>
+							<td> <input type="text" name="apellidoP" id="apellidoP"> </td>
+
+					</tr> 
+					<tr>  
+							<td> Apellido Materno: </td>
+							<td> <input type="text" name="apellidoM" id="apellidoM"> </td>
+
+					</tr>
+
+					<tr>  
+							<td> &nbsp; </td>
+							<td>  <input type="submit" > </td>
+
+					</tr>  
+					
+
+			</table>
+
+	</form>
+
+</body>
+</html>
